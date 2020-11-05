@@ -13,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Sprite startingSprite;
 
+    private KeyCode lastHorizontal;
+
+    private Stack<KeyCode> stack = new Stack<KeyCode>();
+
     Vector2 movement;
 
     void Start()
@@ -30,6 +34,26 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if (Input.GetKeyDown(KeyCode.A) && spriteRenderer.flipX == false)
+        {
+            lastHorizontal = KeyCode.A;
+        } else if (Input.GetKeyDown(KeyCode.D) && spriteRenderer.flipX == true)
+        {
+            lastHorizontal = KeyCode.D;
+        }
+
+        if (lastHorizontal == KeyCode.A)
+        {
+            spriteRenderer.flipX = true;
+        } else if (lastHorizontal == KeyCode.D)
+        {
+            spriteRenderer.flipX = false;
+        }
+        
+
+        
+
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         if (rb.position.x == lastPosition.x && rb.position.y == lastPosition.y)
